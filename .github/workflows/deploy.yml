@@ -1,8 +1,10 @@
-name: Deploy to GitHub Pages
+
+name: Deploy Smart Campus Tracker
 
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -11,7 +13,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -19,30 +21,29 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: npm ci || npm install
+        run: bun install --frozen-lockfile
 
-      - name: Build
-        run: npm run build
+      - name: Build project
+        run: bun run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload build files
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
