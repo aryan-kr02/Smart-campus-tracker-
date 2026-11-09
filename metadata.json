@@ -1,0 +1,6 @@
+{
+  "name": "LPU Shuttle – Smart Campus Transportation System",
+  "description": "Smart campus transit assistance prototype for Lovely Professional University. Check shuttle availability, estimated arrival times, routes, stops, and crowd status.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
